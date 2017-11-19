@@ -1,0 +1,22 @@
+{
+  "name": "udacity-pixel-art-maker-gallery",
+  "version": "0.0.0",
+  "description": "inspired by Udacity FeWd-2017 and community",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Divan4ik/udct-pam-gallery.git"
+  },
+  "author": "students",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Divan4ik/udct-pam-gallery/issues"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
