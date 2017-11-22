@@ -1,4 +1,4 @@
-const Jimp = require('Jimp');
+const Jimp = require('jimp');
 
 const rgbArrayToImageConverter = function(data) {
 
@@ -20,7 +20,7 @@ const rgbArrayToImageConverter = function(data) {
 
 	let imageData = scale(rawHexPixlesMatrix, scaleNum);
 
-	let image = new Jimp(imageWidth, imageHeight, function (err, image) {
+	return new Jimp(imageWidth, imageHeight, function (err, image) {
 		if (err) throw err;
 
 		imageData.forEach((row, y) => {
@@ -30,11 +30,6 @@ const rgbArrayToImageConverter = function(data) {
 		});
 	});
 
-	image.write(serve_dir+filename, (err) => {
-		if (err) throw err;
-	});
-
-	return filename;	
 }
 
 const scale = function (arr, mag) {

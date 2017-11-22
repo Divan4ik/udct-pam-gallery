@@ -1,3 +1,4 @@
 update.sh
 node_modules/
 package-lock.json
+config/db.config.js

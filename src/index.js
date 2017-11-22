@@ -1,36 +1,20 @@
+let dbConfig = require('../config/db.config.js');
+const mysql = require('mysql');
+const pool = mysql.createPool(dbConfig);
+let bodyParser = require('body-parser');
+
 const express = require('express');
 const app = express();
+const MongoClient = require('mongodb').MongoClient;
+
+// for [x-forwarded-for] from nginx
+app.set('trust proxy', '127.0.0.1');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const port = 8000;
-const path = require('path');
-const rootDir = __dirname + '/../';
-const hostname = req.protocol + '://' + req.get('host');
-const templates = rootDir+'templates/';
-const ImageDir = '/images/';
-const imageServeDir = rootDir + ImageDir;
-const converter  = require('./rgbArrayToImageConverter.js');
-const saveImage  = require('./imageSaver.js');
 
-app.get('/', (req, res) =>  {
-	res.sendFile( path.join(templates+'index.html') )
-});
+require('./routes')(app, pool);
 
-app.post('/', (req, res) =>  {
-
-	let data = [
-		[[0, 0, 0,255], [255,255,255,255],[255,255,255,255],[0,0,0,255]],
-		[[0, 0, 0,255], [0, 0, 0,255],[255,255,255,255],[0,0,0,255]],
-		[[0, 0, 0,255], [255,255,255,255],[0, 0, 0,255],[0,0,0,255]],
-		[[0, 0, 0,255], [255,255,255,255],[255,255,255,255],[0,0,0,255]]
-	]
-
-	let image = converter(data);
-	let filename = saveImage(image, imageServeDir);
-	let responseData = {
-		'url' => hostname + imageServeDir + '/' + filename
-	}
-	res.json( responseData );
-	
-});
-
-app.listen(port, () => console.log('listening on port ' + port));
+app.listen(process.env.PORT || port);
+console.log('listening on port ' + port);

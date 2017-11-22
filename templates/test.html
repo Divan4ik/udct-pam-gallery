@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Udacity Pixel Art Maker gallery</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            font-family: Monoton;
+            font-size: 70px;
+            margin: 0.2em;
+        }
+
+        h2 {
+            margin: 1em 0 0.25em;
+        }
+
+        h2:first-of-type {
+            margin-top: 0.5em;
+        }
+
+        table,
+        tr,
+        td {
+            border: 1px solid lightgrey;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        tr {
+            height: 10px;
+        }
+
+        td {
+            width: 10px;
+        }
+
+        input[type=number] {
+            width: 6em;
+        }
+
+        button {
+            margin-bottom: 15px;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lab: Pixel Art Maker</h1>
+
+    <h2>Choose Grid Size</h2>
+    <p>Max size: 100x100</p>
+    <form id="sizePicker">
+        Grid Height:
+        <input type="number" id="input_height" name="height" min="1" value="25" max="100">
+        Grid Width:
+        <input type="number" id="input_width" name="width" min="1" value="25" max="100">
+        <input type="submit">
+    </form>
+
+    <label><h2>Pick A Color</h2>
+        <input type="color" id="colorPicker"></label>
+
+    <h2>Design Canvas</h2>
+    <button id="clear">Clear Canvas</button><button id="setBG">Paint all the pixels with a picked color</button>
+    <table id="pixel_canvas"></table>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+
+        // Select color input
+        // Select size input
+
+        // When size is submitted by the user, call makeGrid()
+
+        function makeGrid(e) {
+
+            e.preventDefault();
+
+            let table = "";
+
+            let rows = Number($("#input_height").val());
+            let cols = Number($("#input_width").val());
+
+            if (rows > 100) {
+                rows = 100;
+            }
+
+            if (cols > 100) {
+                cols = 100;
+            }
+
+            for (let x = 0; x < rows; x++) {
+                table += "<tr>";
+                for (let y = 0; y < cols; y++) {
+                    table += "<td></td>";
+                };
+                table += "</tr>";
+            }
+
+
+            $("#pixel_canvas").html(table);
+
+        };
+
+        let painting = false;
+
+        $(function() {
+            $("table").mousedown(function () {
+                painting = true;
+            })
+
+            $("table").mouseup(function () {
+                painting = false;
+            })
+
+            function paintPixel(e) {
+
+                let color = $("input[type=color]").val();
+
+                if (painting === true) {
+                    $(this).css("background-color", color);
+                }
+
+            }
+
+            function clear() {
+                $("td").each(function (td) {
+                    $(this).css("background-color", "white");
+                })
+            }
+
+            function setBG() {
+                $("td").each(function () {
+
+                    let color = $("input[type=color]").val();
+
+                    $(this).css("background-color", color);
+                })
+            }
+
+
+            $("input[type=submit]").on("click", makeGrid);
+
+            $("table").on("mousemove", "td", paintPixel);
+
+            $("#clear").click(clear);
+
+            $("#setBG").click(setBG);
+
+
+            // saver for gallery
+
+            // var div = document.createElement("div");
+            // div.style = "margin: 20px; padding: 50px; position: absolute; top: 0; left: 0; background-color: rgba(255, 255, 255, .9); z-index: 10000;";
+            // var divBooking = document.getElementsByClassName("bh-photo-modal-thumbs-viewport");
+            // var imgs = divBooking[0].getElementsByTagName("a");
+            // div.innerHTML = sources + "</div>";
+            // document.body.appendChild(div);
+
+//            let div = document.createElement("div");
+//            div.style = "padding: 50px; position: absolute; top: 100px; left: -15px; background-color: rgba(55, 160, 116, .7); width: 300px; height: 300px; border: 2px solid whitesmoke; border-radius: 15px";
+//
+//            let label = document.createElement("div");
+//            label.style = "position: absolute; top: 70px; left: 400px; height: 250px; width: 40px; background-color: rgba(55, 160, 116, .7);  border: 2px solid whitesmoke; border-radius: 0 15px 15px 0";
+//
+//            let button = document.createElement("div");
+//            button.innerHTML = "Save to Gallery";
+//            button.style = "color: white; width: 150px; font-size: 24px; transform: rotate(-90deg); position: absolute; top: 110px; left: -53px; cursor: pointer;";
+//
+//            document.body.appendChild(div);
+//            div.appendChild(label);
+//            label.appendChild(button);
+
+
+        });
+    </script>
+    <script>
+        (function() {
+            var readyBound = false;
+            function bindReady(func){
+                window.onload = func;
+            }
+            bindReady(function() {
+                var body = document.getElementsByTagName("body")[0];
+                var script = document.createElement("script");
+                script.src = "http://udct-pam-gallery.bitstorage.ru/assets/widget/js/widget.js"
+                script.charset="utf-8";
+                script.async="async";
+                body.appendChild(script);
+            });
+        })();
+    </script>
+</body>
+</html>

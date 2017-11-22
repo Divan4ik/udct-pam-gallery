@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Download your Pixel Art</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="googlebot" content="noindex"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <link rel="stylesheet" href="/assets/widget/css/inside.css?v=1234">
+</head>
+<body>
+<div class="container">
+    <form action="">
+        <p>
+            <input type="submit" value="Save my Art!" />
+        </p>
+    </form>
+</div>
+<script>
+    document.querySelector('form').addEventListener('submit', function(e){
+        e.preventDefault();
+        parent.Widget.send();
+    }, false);
+</script>
+</body>
+</html>
